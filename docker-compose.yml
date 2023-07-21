@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    image: ${CONTAINER_REGISTRY_BASE}/nuxtjs
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      target: nodejs
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+    ports:
+      - "3000:3000"
+    volumes:
+      - app_node_modules:/app/node_modules
+      - app_dotnuxt:/app/.nuxt
+volumes:
+  app_node_modules:
+  app_dotnuxt:

@@ -1,0 +1,17 @@
+version: '3'
+
+tasks:
+  install:
+    desc: 'Yarn install.'
+    cmds:
+      - '{{.APP_COMPOSE}} yarn install'
+
+  add:
+    desc: 'Yarn add.'
+    cmds:
+      - '{{.APP_COMPOSE}} yarn add {{.CLI_ARGS}}'
+
+  generate:
+    desc: 'Yarn generate.'
+    cmds:
+      - '{{.APP_COMPOSE}} yarn generate'

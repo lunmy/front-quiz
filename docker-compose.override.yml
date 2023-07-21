@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    volumes:
+      - ./:/app
+      - ./docker/health-check.js:/app/health-check.js:ro
+
+    command: [ "yarn", "dev" ]
+
+

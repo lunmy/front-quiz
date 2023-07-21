@@ -1,0 +1,63 @@
+version: '3'
+
+tasks:
+  up:
+    desc: 'Run docker containers.'
+    cmds:
+      - docker-compose {{.CLI_ARGS}} up -d --remove-orphans
+      - task: ps
+
+  down:
+    desc: 'Stop docker containers.'
+    cmds:
+      - docker-compose down --remove-orphans
+
+  restart:
+    desc: 'Relaunch docker containers.'
+    cmds:
+      - task: down
+      - task: up
+
+  build:
+    desc: 'Run docker build.'
+    cmds:
+      - docker-compose build {{.CLI_ARGS}}
+
+  logs:
+    desc: "Display container's logs."
+    cmds:
+      - docker-compose logs {{.CLI_ARGS}}
+
+  ps:
+    desc: 'Show docker processes.'
+    cmds:
+      - docker-compose ps
+
+  app:
+    desc: 'Execute a command in a app container'
+    cmds:
+      - '{{.APP_COMPOSE}} sh'
+
+  clean:
+    desc: 'Remove node_modules, .nuxt folders and shutting down docker containers'
+    cmds:
+      - '{{.APP_COMPOSE}} rm -rf node_modules .nuxt .package-lock.json'
+      - docker-compose down --remove-orphans
+      - docker-compose rm -f -s -v
+
+  wait-for:
+    desc: "Wait for a given container to be healthy."
+    cmds:
+      - |
+        while status="$(docker inspect -f '{{regexReplaceAll "(if .Config.Healthcheck)( print .State.Health.Status)( end)" "if .Config.Healthcheck print .State.Health.Status end" "{{${1}}}{{${2}}}{{${3}}}"}}' "$(docker-compose ps -q {{.CLI_ARGS}})")"; do
+          case $status in
+            starting) sleep 1;;
+            healthy) exit 0;;
+            unhealthy)
+              docker-compose ps
+              docker-compose logs
+              exit 1
+            ;;
+          esac
+        done
+        exit 1
