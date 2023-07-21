@@ -5,6 +5,7 @@ services:
     working_dir: /frontend
     volumes:
       - ./:/frontend
+      - docker/health-check.js:/frontend/health-check.js
     command: [ "yarn", "dev" ]
 
 

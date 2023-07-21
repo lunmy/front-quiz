@@ -59,7 +59,7 @@ jobs:
 
       - name: Check App
         run: |
-          HTTP_CODE=$(curl -ik -X GET 'https://localhost:3000/login' -o /dev/null -w '%{http_code}\n' -s)
+          HTTP_CODE=$(curl -ik -X GET 'http://localhost:3000' -o /dev/null -w '%{http_code}\n' -s)
           echo $HTTP_CODE
           if [ "$HTTP_CODE" = "200" ]; then
               exit 0
