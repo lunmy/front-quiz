@@ -16,9 +16,7 @@ WORKDIR /app
 
 # Write config in .env
 RUN touch ./.env
-ARG NUXT_ENV_API_AUTH_URL
-ARG NUXT_ENV_API_CARE
-ARG APPLICATION_ID
+ARG BASE_API_URL
 
 RUN echo "BASE_API_URL=${BASE_API_URL}" >> ./.env; \
     cat ./.env
@@ -70,4 +68,4 @@ HEALTHCHECK --interval=5s --timeout=3s --retries=3 CMD ["node", "/app/health-che
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["node", "/app/.output/server/index.mjs"]

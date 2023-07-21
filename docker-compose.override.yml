@@ -2,10 +2,9 @@ version: '3.8'
 
 services:
   app:
+    working_dir: /frontend
     volumes:
-      - ./:/app
-      - ./docker/health-check.js:/app/health-check.js:ro
-
+      - ./:/frontend
     command: [ "yarn", "dev" ]
 
 

@@ -27,21 +27,15 @@ jobs:
 
       - name: Sets build env vars
         run: |
-          echo "NUXT_ENV_API_AUTH_URL=${{ secrets.PROD_NUXT_ENV_API_AUTH_URL }}" >> $GITHUB_ENV; \
-          echo "NUXT_ENV_API_CARE=${{ secrets.PROD_NUXT_ENV_API_CARE }}" >> $GITHUB_ENV; \
-          echo "APPLICATION_ID=${{ secrets.PROD_APPLICATION_ID }}" >> $GITHUB_ENV;
+          echo "NUXT_ENV_API_AUTH_URL=${{ secrets.BASE_API_URL }}" >> $GITHUB_ENV;
         if: ${{ github.ref == 'refs/heads/master'}}
 
       - name: Docker build images
         env:
-          NUXT_ENV_API_AUTH_URL: ${{ env.NUXT_ENV_API_AUTH_URL }}
-          NUXT_ENV_API_CARE: ${{ env.NUXT_ENV_API_CARE }}
-          APPLICATION_ID: ${{ env.APPLICATION_ID }}
+          NUXT_ENV_API_AUTH_URL: ${{ env.BASE_API_URL }}
         run: |
           docker-compose -f docker-compose.yml build \
-          --build-arg NUXT_ENV_API_AUTH_URL=${{ env.NUXT_ENV_API_AUTH_URL }} \
-          --build-arg NUXT_ENV_API_CARE=${{ env.NUXT_ENV_API_CARE }} \
-          --build-arg APPLICATION_ID=${{ env.APPLICATION_ID }}
+          --build-arg BASE_API_URL=${{ env.BASE_API_URL }}
 
       - name: Run App
         run: |

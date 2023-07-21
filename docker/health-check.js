@@ -1,11 +1,9 @@
-const http = require('follow-redirects').https;
+const http = require('follow-redirects').http;
 
-// Prevent check certificate error
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 const options = {
   host: '0.0.0.0',
   port: 3000,
-  path: '/login',
+  path: '/',
   method: 'GET',
   timeout: 2000
 };
