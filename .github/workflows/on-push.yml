@@ -111,26 +111,38 @@ jobs:
       - name: Stop portainer stack
         run: |
           curl -X POST '${{ secrets.PORTAINTER_API }}/stacks/${{ env.STACK_ID }}/stop' \
-          --header 'Authorization: Bearer ${{ env.TOKEN }}' \
-          --proxy ${{ secrets.PROXY_SERVER }} -s
+          --header 'Authorization: Bearer ${{ env.TOKEN }}' -s
 
+      - name: Delete portainer nuxtjs image
+        env:
+          REGISTRY_PATH_ENV: ${{ env.REGISTRY_PATH }}/${{ env.REGISTRY_ENV }}/nuxtjs:latest
+        run: |
+          HTTP_CODE=$(curl -i -X DELETE '${{ secrets.PORTAINTER_API }}/endpoints/${{ env.ENTRY_POINT_ID }}/docker/images/${{ env.REGISTRY_PATH_ENV }}?force=true' \
+          --header 'Authorization: Bearer ${{ env.TOKEN }}' \
+          --header 'X-Registry-Auth: ${{ secrets.PORTAINTER_REGISTRY_KEY }}' \
+          -o /dev/null -w '%{http_code}\n' -s)
+          if [ "$HTTP_CODE" = "200" ]; then
+          exit 0
+          fi
+          exit 1
       - name: Update portainer nuxtjs image
         env:
           REGISTRY_PATH_ENV: ${{ env.REGISTRY_PATH }}/${{ env.REGISTRY_ENV }}/nuxtjs:latest
         run: |
           HTTP_CODE=$(curl -i -X POST '${{ secrets.PORTAINTER_API }}/endpoints/${{ env.ENTRY_POINT_ID }}/docker/images/create?fromImage=${{ env.REGISTRY_PATH_ENV }}' \
           --header 'Authorization: Bearer ${{ env.TOKEN }}' \
-          --header 'X-Registry-Auth: ${{ secrets.PORTAINTER_DPS_REGISTRY_KEY }}' \
-          --proxy ${{ secrets.PROXY_SERVER }} -o /dev/null -w '%{http_code}\n' -s)
+          --header 'X-Registry-Auth: ${{ secrets.PORTAINTER_REGISTRY_KEY }}' \
+          -o /dev/null -w '%{http_code}\n' -s)
           if [ "$HTTP_CODE" = "200" ]; then
               exit 0
           fi
           exit 1
+
       - name: Start portainer stack
         run: |
           HTTP_CODE=$(curl -i -X POST '${{ secrets.PORTAINTER_API }}/stacks/${{ env.STACK_ID }}/start' \
           --header 'Authorization: Bearer ${{ env.TOKEN }}' \
-          --proxy ${{ secrets.PROXY_SERVER }} -o /dev/null -w '%{http_code}\n' -s)
+          -o /dev/null -w '%{http_code}\n' -s)
           if [ "$HTTP_CODE" = "200" ]; then
               exit 0
           fi
