@@ -13,9 +13,9 @@ env:
   REGISTRY_ENV: preprod
   PACKAGE_NAME: front-quiz
   REGISTRY_PATH: ghcr.io/${{ github.repository }}
-  STACK_ID: 97 # Stack id on portainer side #
-  PROD_STACK_ID: 98 # Stack id on portainer side #
-  ENTRY_POINT_ID: 1 # entry-point id on portainer side #
+  STACK_ID: 15 # Stack id on portainer side #
+  PROD_STACK_ID: 15 # Stack id on portainer side #
+  ENTRY_POINT_ID: 2 # entry-point id on portainer side #
   BASE_API_URL: ${{ secrets.PROD_BASE_API_URL }}
 
 jobs:
