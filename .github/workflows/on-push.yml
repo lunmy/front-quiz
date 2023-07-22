@@ -124,6 +124,7 @@ jobs:
           if [ "$HTTP_CODE" = "200" ]; then
           exit 0
           fi
+          echo "HTTP_CODE=$HTTP_CODE"
           exit 1
       - name: Update portainer nuxtjs image
         env:
@@ -136,6 +137,7 @@ jobs:
           if [ "$HTTP_CODE" = "200" ]; then
               exit 0
           fi
+          echo "HTTP_CODE=$HTTP_CODE"
           exit 1
 
       - name: Start portainer stack
