@@ -66,7 +66,7 @@ import {VDataTable} from 'vuetify/labs/VDataTable'
 const {$quizApi} = useNuxtApp()
 
 definePageMeta({
-  middleware: process.client ? 'auth' : undefined,
+  middleware: 'auth',
   layout: 'admin'
 })
 const itemsPerPage = ref(20)

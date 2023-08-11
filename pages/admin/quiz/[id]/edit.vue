@@ -8,7 +8,7 @@
 import {QuizForm} from "#components";
 import {ref} from "vue";
 definePageMeta({
-  middleware: process.client ? 'auth' : undefined,
+  middleware: 'auth' ,
   layout: 'admin'
 })
 const quiz = ref(null)

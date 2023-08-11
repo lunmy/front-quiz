@@ -3,7 +3,7 @@
 </template>
 <script setup>
 definePageMeta({
-  middleware: process.client ? 'auth' : undefined,
+  middleware: 'auth' ,
   layout: 'admin'
 })
 </script>
