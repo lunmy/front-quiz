@@ -29,6 +29,8 @@ COPY yarn.lock ./
 COPY assets assets/
 COPY components components/
 COPY composables composables/
+COPY layouts layouts/
+COPY middleware middleware/
 COPY modules modules/
 COPY pages pages/
 COPY plugins plugins/
