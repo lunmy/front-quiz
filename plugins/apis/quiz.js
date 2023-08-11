@@ -1,6 +1,30 @@
+import {setStorage, getStorage} from "@/composables/storage";
 export default ({axios, baseUrl }) => ({
+
+    async login(credentials) {
+        const request = await axios.post(`${baseUrl}/jwt-login`, credentials, {
+        })
+        if (request.status === 200) {
+            setStorage('token', request.data.token)
+            return request.data
+        }
+        return null
+    },
+
+    async getQuizzes(filters) {
+        return await this.getAll('quizzes', filters)
+    },
     async getQuiz(id) {
         return await this.getOne('quizzes', id)
+    },
+    async createQuiz(quiz) {
+        return await this.create('quizzes', quiz, {groups: ['question:read','answer:read']})
+    },
+    async updateQuiz(quiz) {
+        return await this.update(quiz, {groups: ['question:read', 'answer:read']})
+    },
+    async deleteQuiz(id) {
+        return await this.delete(id)
     },
     async createQuizAnswer(app) {
         return await this.create('quiz-answers', app)

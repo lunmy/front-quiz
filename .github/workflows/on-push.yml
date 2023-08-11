@@ -101,7 +101,6 @@ jobs:
       - name: Login to portainer
         run: |
           JWT=$(curl -s -X POST '${{ secrets.PORTAINTER_API }}/auth' \
-          --proxy ${{ secrets.PROXY_SERVER }} \
           --data-raw '{
               "username": "${{ secrets.PORTAINER_LOGIN }}",
               "password": "${{ secrets.PORTAINER_PASSWORD }}"
@@ -121,11 +120,7 @@ jobs:
           --header 'Authorization: Bearer ${{ env.TOKEN }}' \
           --header 'X-Registry-Auth: ${{ secrets.PORTAINTER_REGISTRY_KEY }}' \
           -o /dev/null -w '%{http_code}\n' -s)
-          if [ "$HTTP_CODE" = "200" ]; then
-          exit 0
-          fi
           echo "HTTP_CODE=$HTTP_CODE"
-          exit 1
       - name: Update portainer nuxtjs image
         env:
           REGISTRY_PATH_ENV: ${{ env.REGISTRY_PATH }}/${{ env.REGISTRY_ENV }}/nuxtjs:latest

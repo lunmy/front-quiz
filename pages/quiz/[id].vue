@@ -204,7 +204,6 @@ async function init(){
 
 onMounted(async () => {
   $socket.on('answered', (data) => {
-    console.log(data)
     quiz.value= data.quiz
     setStorage('quiz-' + route.params.id, quiz.value)
   })
@@ -283,7 +282,6 @@ function validateAnswer() {
 }
 
 function nextQuestion(data) {
-  console.log(data)
   if (isNexStepAvailable.value) {
     currentQuestion.value = data.currentQuestion;
     isNexStepAvailable.value = false

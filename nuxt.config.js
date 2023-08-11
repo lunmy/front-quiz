@@ -3,6 +3,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiUrl: process.env.BASE_API_URL,
+            appUrl: process.env.APP_URL,
         },
     },
 
@@ -12,6 +13,9 @@ export default defineNuxtConfig({
         '@mdi/font/css/materialdesignicons.min.css',
         '@/assets/css/main.scss',
     ],
+    head: {
+      title: 'Quiz App',
+    },
     postcss: {
         plugins: {
             tailwindcss: {},

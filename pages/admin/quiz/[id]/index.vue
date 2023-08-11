@@ -4,9 +4,9 @@
       :login="name"
       loginLabel="Login"
       :loginRules="[textRule]"
-      :email="email"
-      emailLabel="Mot de passe"
-      :emailRules="[textRule]"
+      :password="email"
+      passwordLabel="Mot de passe"
+      :passwordRules="[textRule]"
       :errorMessage="errorMessage"
       @validated="submitLogin"/>
   <div v-else>
@@ -88,7 +88,6 @@ onMounted(async () => {
     players.value = data
   })
   $socket.on('allPlayersAnswered', (data) => {
-    console.log('ici')
       isNextStepAvailable.value = true
   })
 

@@ -48,6 +48,16 @@ export default {
           success: '#00AD90',
           error: '#DD614A',
         },
+        'primary-admin':{
+          0:  '#00B0F0',
+          900: rgbaToHex(0,176,240,.1),
+        },
+        'secondary-admin': {
+          0: '#00477a',
+          100: rgbaToHex(0,71,122,.9),
+          500: rgbaToHex(0,71,122,.5),
+          900: rgbaToHex(0,71,122,.1),
+        },
       },
     },
   },

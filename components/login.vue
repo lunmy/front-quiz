@@ -23,19 +23,20 @@
             :label="_loginLabel"
             :rules=_loginRules
             rounded=50
-            prepend-inner-icon="mdi-account"
+            :prepend-inner-icon="_loginIcon"
             variant="outlined"
             class="w-full mt-5 rounded-2xl"
             required
         />
         <v-text-field
-            v-model="_email"
-            :label="_emailLabel"
-            :rules=_emailRules
+            v-model="_password"
+            :label="_passwordLabel"
+            :rules=_passwordRules
             rounded-full
-            prepend-inner-icon="mdi-email"
+            :prepend-inner-icon="_passwordIcon"
             variant="outlined"
             class="w-full mt-5 rounded-2xl"
+            :type="_isPasswordField ? 'password' : 'text'"
             required
         />
         <button
@@ -58,19 +59,22 @@ const contactForm = ref(null);
 const emit = defineEmits(['validated'])
 
 const _login= ref("");
-const _email= ref("");
+const _password= ref("");
 const _loginLabel= ref("Nom complet");
-const _emailLabel= ref("Email");
+const _passwordLabel= ref("Email");
 const _loginRules= ref([]);
-const _emailRules= ref([]);
+const _passwordRules= ref([]);
+const _loginIcon= ref("mdi-email");
+const _passwordIcon= ref("mdi-lock");
 const _errorMessage= ref("");
+const _isPasswordField= ref(false);
 
 const props = defineProps({
   login: {
     type: String,
     required: true,
   },
-  email: {
+  password: {
     type: String,
     required: true,
   },
@@ -83,7 +87,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  emailLabel: {
+  passwordLabel: {
     type: String,
     required: true,
   },
@@ -92,21 +96,39 @@ const props = defineProps({
     required: false,
     default: () => textRule(),
   },
-  emailRules: {
+  passwordRules: {
     type: Array,
     required: false,
     default: () => emailRule(),
+  },
+  loginIcon: {
+    type: String,
+    required: false,
+    default: 'mdi-email',
+  },
+  passwordIcon: {
+    type: String,
+    required: false,
+    default: 'mdi-lock',
+  },
+  isPasswordField: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
 onMounted(() => {
 _login.value = props.login;
-_email.value = props.email;
+_password.value = props.password;
 _loginLabel.value = props.loginLabel;
-_emailLabel.value = props.emailLabel;
+_passwordLabel.value = props.passwordLabel;
 _loginRules.value = props.loginRules;
-_emailRules.value = props.emailRules;
+_passwordRules.value = props.passwordRules;
 _errorMessage.value = props.errorMessage;
+_loginIcon.value = props.loginIcon;
+_passwordIcon.value = props.passwordIcon;
+_isPasswordField.value = props.isPasswordField;
 });
 
 function submit() {
@@ -115,7 +137,7 @@ function submit() {
     if (success.valid) {
       emit('validated', {
         login: _login.value,
-        email: _email.value,
+        password: _password.value,
       });
     }
   })
