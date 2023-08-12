@@ -32,6 +32,7 @@ export default defineNuxtModule({
                     }
                 })
                 io.to(socket.quizId).emit('playersData', playersDatas)
+                return playersDatas;
             }
 
             const allPlayersAndwered = async (socket) => {
@@ -116,8 +117,25 @@ export default defineNuxtModule({
                     socket.currentQuestion = data.currentQuestion
                     socket.admin = true
                     socket.join(data.quizId)
-                    await getPlayers(socket)
+                    const all = await getPlayers(socket)
+                    // Get min currentQuestion
+                    let min = 0;
+                    all.forEach((p) => {
+                        if (p.currentQuestion < min || min === 0) {
+                            min = p.currentQuestion
+                        }
+                    })
+                    socket.currentQuestion = min
+                    socket.emit('currentQuestion', {currentQuestion: min})
                     await allPlayersAndwered(socket);
+                })
+
+                socket.on('quizSummary', async function msg(data) {
+                    const playersDatas = await getPlayers(socket)
+                    socket.emit('quizSummaryResults', {
+                        players: playersDatas,
+                        quizId: socket.quizId
+                    })
                 })
             })
         })

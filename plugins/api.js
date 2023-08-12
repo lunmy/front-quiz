@@ -9,9 +9,14 @@ export default defineNuxtPlugin((NuxtApp) =>{
     });
 
     apiAxios.interceptors.request.use((config) => {
+        const nuxtConfig = useRuntimeConfig()
         const token = getStorage('token');
-        if(token === undefined || token === '') return config
-        config.headers['Authorization'] = `Bearer ${token}`
+        if(token === undefined || token === null || token === '') {
+            config.headers['X-Api-Key'] = nuxtConfig.public.apiKey
+        }
+        else{
+            config.headers['Authorization'] = `Bearer ${token}`
+        }
         return config
     })
 

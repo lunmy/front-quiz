@@ -17,8 +17,8 @@ import jwt_decode from "jwt-decode";
 const {$quizApi} = useNuxtApp()
 const router = useRouter();
 
-const login = ref('anthony@lunamy.com'); // email
-const password = ref('super_admin');
+const login = ref(''); // email
+const password = ref('');
 
 
 async function submitLogin(data) {

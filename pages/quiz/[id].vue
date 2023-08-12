@@ -129,9 +129,9 @@
       :login="name"
       loginLabel="Nom complet"
       :loginRules="[textRule]"
-      :email="email"
-      emailLabel="Email"
-      :emailRules="[textRule, emailRule]"
+      :password="email"
+      passwordLabel="Email"
+      :passwordRules="[textRule, emailRule]"
       @validated="submitLogin"/>
 </template>
 <script setup>
@@ -257,7 +257,7 @@ function color() {
 */
 async function submitLogin(data) {
   setStorage('name', data.login);
-  setStorage('email', data.email);
+  setStorage('email', data.password);
   await init();
 }
 

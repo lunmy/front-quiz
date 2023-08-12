@@ -7,7 +7,7 @@
         class="elevation-1"
     >
       <template #[`item.admin`]="{ item }">
-        <nuxt-link target="_blank" :to="`/admin/${item.selectable['@id'].split('/').pop()}`">
+        <nuxt-link :to="`/admin/quiz/${item.selectable['@id'].split('/').pop()}`">
           <v-icon
               class="text-primary-admin-0"
               icon="mdi-link"
