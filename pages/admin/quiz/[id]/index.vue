@@ -127,15 +127,15 @@ const playersResults = ref(null)
 const table = ref('answers')
 const pdfSection = ref(null);
 
-try {
-  quiz.value = await $quizApi.getQuiz(route.params.id)
-} catch (e) {
-  errorMessage.value = e.message
-  console.log(e.message)
-}
-
 
 onMounted(async () => {
+  try {
+    quiz.value = await $quizApi.getQuiz(route.params.id)
+  } catch (e) {
+    errorMessage.value = e.message
+    console.log(e.message)
+  }
+
   $socket.emit('adminConnectedTo', {
     quizId: route.params.id,
     currentQuestion: currentQuestion.value
@@ -157,17 +157,14 @@ onMounted(async () => {
     currentQuestion.value = data.currentQuestion
     question.value = quiz.value.questions[currentQuestion.value]
   })
-
-})
-
-if (getStorage('quiz-' + route.params.id) !== null) {
-  const quizStorage = getStorage('quiz-' + quiz.value['@id'].split('/').pop())
-  if (quizStorage !== null) {
-    quiz.value = quizStorage
+  if (getStorage('quiz-' + route.params.id) !== null) {
+    const quizStorage = getStorage('quiz-' + quiz.value['@id'].split('/').pop())
+    if (quizStorage !== null) {
+      quiz.value = quizStorage
+    }
   }
-}
-question.value = quiz.value.questions[currentQuestion.value]
-
+  question.value = quiz.value.questions[currentQuestion.value]
+})
 
 function submitLogin(data) {
   errorMessage.value = '';

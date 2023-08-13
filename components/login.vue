@@ -2,7 +2,7 @@
   <!-- component -->
   <div class="h-screen md:flex">
     <div
-        class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr bg-primary-0  i justify-around items-center hidden">
+        class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr bg-primary-0 justify-around items-center hidden">
       <div>
         <h1 class="text-white font-bold text-4xl font-sans">Papillons Blancs de Dunkerque</h1>
         <p class="text-white mt-1">Quiz en ligne </p>

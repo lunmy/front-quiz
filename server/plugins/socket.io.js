@@ -4,8 +4,8 @@ export default defineNitroPlugin((nitroApp) => {
         console.log('aaaaaa')
     })
     const nuxtConfig = useRuntimeConfig();
-    const url = nuxtConfig.public.socketPort;
-    const io = new Server(3001, {
+    const port = nuxtConfig.public.socketPort || 3001;
+    const io = new Server(port, {
         serveClient: false,
         cors: {
             origin: '*',
