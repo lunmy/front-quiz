@@ -46,7 +46,7 @@ jobs:
           docker-compose -f docker-compose.yml build \
           --build-arg BASE_API_URL=${{ env.BASE_API_URL }} \
           --build-arg API_KEY=${{ env.API_KEY }} \
-          --build-arg APP_URL=${{ env.APP_URL }}
+          --build-arg APP_URL=${{ env.APP_URL }} \
           --build-arg APP_ENV=${{ env.SOCKET_PORT }}
 
       - name: Run App
