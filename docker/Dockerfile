@@ -17,8 +17,12 @@ WORKDIR /app
 # Write config in .env
 RUN touch ./.env
 ARG BASE_API_URL
+ARG API_KEY
+ARG APP_URL
 
 RUN echo "BASE_API_URL=${BASE_API_URL}" >> ./.env; \
+    echo "API_KEY=${API_KEY}" >> ./.env; \
+    echo "APP_URL=${APP_URL}" >> ./.env; \
     cat ./.env
 
 COPY --from=php_builder /app/ssl  /etc/ssl

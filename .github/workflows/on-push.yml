@@ -17,6 +17,8 @@ env:
   PROD_STACK_ID: 15 # Stack id on portainer side #
   ENTRY_POINT_ID: 2 # entry-point id on portainer side #
   BASE_API_URL: ${{ secrets.PROD_BASE_API_URL }}
+  APP_URL: ${{ secrets.PROD_APP_URL }}
+  API_KEY: ${{ secrets.PROD_API_KEY }}
 
 jobs:
   Build:
@@ -27,15 +29,21 @@ jobs:
 
       - name: Sets build env vars
         run: |
-          echo "NUXT_ENV_API_AUTH_URL=${{ secrets.BASE_API_URL }}" >> $GITHUB_ENV;
+          echo "BASE_API_URL=${{ secrets.PROD_BASE_API_URL }}" >> $GITHUB_ENV; \
+          echo "APP_URL=${{ secrets.PROD_APP_URL }}" >> $GITHUB_ENV; \
+          echo "API_KEY=${{ secrets.PROD_API_KEY }}" >> $GITHUB_ENV; \
         if: ${{ github.ref == 'refs/heads/master'}}
 
       - name: Docker build images
         env:
-          NUXT_ENV_API_AUTH_URL: ${{ env.BASE_API_URL }}
+          BASE_API_URL: ${{ env.BASE_API_URL }}
+          API_KEY: ${{ env.API_KEY }}
+          APP_URL: ${{ env.APP_URL }}
         run: |
           docker-compose -f docker-compose.yml build \
           --build-arg BASE_API_URL=${{ env.BASE_API_URL }}
+          --build-arg API_KEY=${{ env.API_KEY }}
+          --build-arg APP_URL=${{ env.APP_URL }}
 
       - name: Run App
         run: |

@@ -52,7 +52,7 @@
         </button>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="mb-12" ref="pdfSection">
       <h2 class="text-center text-2xl mb-8">Résultats</h2>
       <div class="flex w-1/4 border border-primary-0 rounded-xl mx-auto overflow-hidden ">
         <span class="text-primary-0 p-2 text-center w-1/2 cursor-pointer"
@@ -99,12 +99,17 @@
         </div>
         </div>
     </div>
+    <div class="fixed bottom-0 right-0 px-8 py-4">
+      <button
+          class="bg-primary-0 text-white rounded-xl px-4 py-3 flex justify-center items-center"
+      >
+       Imprimer les résultats
+      </button>
+    </div>
   </div>
 </template>
 <script setup>
-import {Login} from '#components';
 import {ref} from "vue";
-import {textRule} from "@/composables/rules";
 
 const {$quizApi, $socket} = useNuxtApp()
 const route = useRoute()
@@ -119,6 +124,7 @@ const isNextStepAvailable = ref(false)
 const showResults = ref(false)
 const playersResults = ref(null)
 const table = ref('answers')
+const pdfSection = ref(null);
 
 try {
   quiz.value = await $quizApi.getQuiz(route.params.id)
@@ -214,6 +220,9 @@ function getSelectedAnswer(q) {
 }
 function getSelectedAnswerIsCorrect(q) {
   return q.answers.find((a) => a.selected).isCorrect
+}
+function printResults(){
+  console.log('a')
 }
 
 </script>

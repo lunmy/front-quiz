@@ -9,7 +9,9 @@ export default defineNuxtConfig({
     },
 
     devtools: {enabled: true},
-    plugins: [],
+    plugins: [
+        //'@sidebase/nuxt-pdf',
+    ],
     css: [
         '@mdi/font/css/materialdesignicons.min.css',
         '@/assets/css/main.scss',
