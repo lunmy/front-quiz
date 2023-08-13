@@ -63,12 +63,10 @@ export default defineNuxtConfig({
             'process.env.DEBUG': false,
         },
     },
-
-    io: {
-        // module options
-        sockets: [{
-            name: 'main',
-            url: process.env.APP_URL + ':' + process.env.SOCKET_PORT,
-        }]
-    },
+    /*serverHandlers: [
+        {
+            route: '/ws',
+            handler: '~/server/plugins/socket.io'
+        }
+    ]*/
 })

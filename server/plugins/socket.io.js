@@ -1,7 +1,8 @@
 import {Server} from 'socket.io';
-
-
 export default defineNitroPlugin((nitroApp) => {
+    nitroApp.hooks.hook('listen', (server) => {
+        console.log('aaaaaa')
+    })
     const nuxtConfig = useRuntimeConfig();
     const url = nuxtConfig.public.socketPort;
     const io = new Server(3001, {
