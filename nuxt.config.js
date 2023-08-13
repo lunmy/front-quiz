@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 
     devtools: {enabled: true},
     plugins: [
-        //'@sidebase/nuxt-pdf',
+        '@sidebase/nuxt-pdf',
     ],
     css: [
         '@mdi/font/css/materialdesignicons.min.css',

@@ -11,6 +11,7 @@
   "devDependencies": {
     "@invictus.codes/nuxt-vuetify": "^0.3.0",
     "@nuxt/devtools": "latest",
+    "@sidebase/nuxt-pdf": "^0.1.1",
     "@types/node": "^18.16.19",
     "autoprefixer": "^10.4.14",
     "nuxt": "^3.6.2",
@@ -20,8 +21,6 @@
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
-    "@nuxt/kit": "npm:@nuxt/kit-edge@latest",
-    "@sidebase/nuxt-pdf": "^0.1.1",
     "add": "^2.0.6",
     "axios": "^1.4.0",
     "jwt-decode": "^3.1.2",

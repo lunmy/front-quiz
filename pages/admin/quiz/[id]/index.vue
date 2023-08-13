@@ -112,7 +112,7 @@
 </template>
 <script setup>
 import {ref} from "vue";
-
+import { exportToPDF } from '#imports'
 const {$quizApi, $socket} = useNuxtApp()
 const route = useRoute()
 const name = ref('admin');
