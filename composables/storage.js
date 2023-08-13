@@ -9,5 +9,7 @@ export function getStorage(key){
 }
 
 export function setStorage(key, value){
-    localStorage.setItem(key, JSON.stringify(value));
+    if (process.client){
+        localStorage.setItem(key, JSON.stringify(value));
+    }
 }

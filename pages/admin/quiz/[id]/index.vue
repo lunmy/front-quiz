@@ -127,6 +127,10 @@ const playersResults = ref(null)
 const table = ref('answers')
 const pdfSection = ref(null);
 
+definePageMeta({
+  middleware: 'auth',
+  layout: 'admin'
+})
 
 onMounted(async () => {
   try {
