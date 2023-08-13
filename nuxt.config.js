@@ -5,6 +5,7 @@ export default defineNuxtConfig({
             apiUrl: process.env.BASE_API_URL,
             appUrl: process.env.APP_URL,
             apiKey: process.env.API_KEY,
+            socketPort: process.env.SOCKET_PORT,
         },
     },
 
@@ -39,7 +40,6 @@ export default defineNuxtConfig({
     modules: [
         '@invictus.codes/nuxt-vuetify',
         'nuxt-socket-io',
-        '~/modules/socket',
     ],
     vuetify: {
         /* vuetify options */
@@ -68,7 +68,7 @@ export default defineNuxtConfig({
         // module options
         sockets: [{
             name: 'main',
-            url: process.env.APP_URL,
+            url: process.env.APP_URL + ':' + process.env.SOCKET_PORT,
         }]
-    }
+    },
 })

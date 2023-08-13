@@ -19,10 +19,12 @@ RUN touch ./.env
 ARG BASE_API_URL
 ARG API_KEY
 ARG APP_URL
+ARG SOCKET_PORT
 
 RUN echo "BASE_API_URL=${BASE_API_URL}" >> ./.env; \
     echo "API_KEY=${API_KEY}" >> ./.env; \
     echo "APP_URL=${APP_URL}" >> ./.env; \
+    echo "SOCKET_PORT=${SOCKET_PORT}" >> ./.env; \
     cat ./.env
 
 COPY --from=php_builder /app/ssl  /etc/ssl
@@ -35,7 +37,6 @@ COPY components components/
 COPY composables composables/
 COPY layouts layouts/
 COPY middleware middleware/
-COPY modules modules/
 COPY pages pages/
 COPY plugins plugins/
 COPY public public/

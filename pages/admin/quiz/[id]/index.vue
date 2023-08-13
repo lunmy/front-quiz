@@ -64,7 +64,7 @@
           <span class="text-primary-0 p-2 text-center w-1/2 cursor-pointer"
                 :class="{'bg-primary-0 text-white ' : table=== 'player'}"
                 @click="table = 'player'"
-          > Par joueurs</span>
+          > Par joueur</span>
         </div>
 
         <div v-if="table==='answers'" v-for="(question, index) in quiz.questions" :key="index" class="p-8">
