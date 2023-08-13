@@ -1,7 +1,8 @@
 import io from 'socket.io-client'
 
 export default defineNuxtPlugin(() => {
-    const socket = io('http://localhost:3000')
+    const nuxtConfig = useRuntimeConfig()
+    const socket = io(nuxtConfig.public.APP_URL)
 
     return {
         provide: {
