@@ -52,59 +52,61 @@
         </button>
       </div>
     </div>
-    <div v-else class="mb-12" ref="pdfSection">
-      <h2 class="text-center text-2xl mb-8">Résultats</h2>
-      <div class="flex w-1/4 border border-primary-0 rounded-xl mx-auto overflow-hidden ">
+    <div v-else class="mb-12">
+      <div ref="pdfSection">
+        <h2 class="text-center text-2xl mb-8">Résultats</h2>
+        <div class="flex w-1/4 border border-primary-0 rounded-xl mx-auto overflow-hidden ">
         <span class="text-primary-0 p-2 text-center w-1/2 cursor-pointer"
-        :class="{'bg-primary-0 text-white ' : table=== 'answers'}"
+              :class="{'bg-primary-0 text-white ' : table=== 'answers'}"
               @click="table = 'answers'"
         >
           Par question</span>
-        <span class="text-primary-0 p-2 text-center w-1/2 cursor-pointer"
-              :class="{'bg-primary-0 text-white ' : table=== 'player'}"
-              @click="table = 'player'"
-        > Par joueurs</span>
-      </div>
+          <span class="text-primary-0 p-2 text-center w-1/2 cursor-pointer"
+                :class="{'bg-primary-0 text-white ' : table=== 'player'}"
+                @click="table = 'player'"
+          > Par joueurs</span>
+        </div>
 
-      <div v-if="table==='answers'" v-for="(question, index) in quiz.questions" :key="index" class="p-8">
-        <div class="border">
-        <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ question.text }}</div>
-        <table class="w-full">
-          <tbody>
-          <tr v-for="player in playersResults" :key="`resultat${index}`" class="border-b">
-            <td class="w-3/12 p-2">{{ player.name }}</td>
-            <td class="w-9/12 p-2"><span :class="{
+        <div v-if="table==='answers'" v-for="(question, index) in quiz.questions" :key="index" class="p-8">
+          <div class="border">
+            <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ question.text }}</div>
+            <table class="w-full">
+              <tbody>
+              <tr v-for="player in playersResults" :key="`resultat${index}`" class="border-b">
+                <td class="w-3/12 p-2">{{ player.name }}</td>
+                <td class="w-9/12 p-2"><span :class="{
               'text-validation-success': getSelectedAnswerIsCorrect(player.quiz.questions[index]),
               'text-validation-error': !getSelectedAnswerIsCorrect(player.quiz.questions[index]),
             }">{{ getSelectedAnswer(player.quiz.questions[index]) }}</span></td>
-          </tr>
-          </tbody>
-        </table>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div v-if="table==='player'" v-for="(player, index) in playersResults" :key="index" class="p-8">
-        <div class="border">
-          <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ player.name }}</div>
-          <table class="w-full">
-            <tbody>
-            <tr v-for="(question, qindex) in quiz.questions" :key="`question-${qindex}`" class="border-b">
-              <td class="w-1/2 p-2">{{ question.text }}</td>
-              <td class="w-1/2 p-2"><span :class="{
+        <div v-if="table==='player'" v-for="(player, index) in playersResults" :key="index" class="p-8">
+          <div class="border">
+            <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ player.name }}</div>
+            <table class="w-full">
+              <tbody>
+              <tr v-for="(question, qindex) in quiz.questions" :key="`question-${qindex}`" class="border-b">
+                <td class="w-1/2 p-2">{{ question.text }}</td>
+                <td class="w-1/2 p-2"><span :class="{
               'text-validation-success': getSelectedAnswerIsCorrect(player.quiz.questions[qindex]),
               'text-validation-error': !getSelectedAnswerIsCorrect(player.quiz.questions[qindex]),
             }">{{ getSelectedAnswer(player.quiz.questions[qindex]) }}</span></td>
-            </tr>
-            </tbody>
-          </table>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        </div>
-    </div>
-    <div class="fixed bottom-0 right-0 px-8 py-4">
-      <button
-          class="bg-primary-0 text-white rounded-xl px-4 py-3 flex justify-center items-center"
-      >
-       Imprimer les résultats
-      </button>
+      </div>
+      <div class="fixed bottom-0 right-0 px-8 py-4">
+        <button
+            class="bg-primary-0 text-white rounded-xl px-4 py-3 flex justify-center items-center"
+        >
+          Imprimer les résultats
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -195,19 +197,20 @@ function isCorrectAnswer(q) {
 }
 
 function nextQuestion() {
-    currentQuestion.value++
-    question.value = quiz.value.questions[currentQuestion.value]
-    isNextStepAvailable.value = false
-    $socket.emit('nextQuestion', {
-      currentQuestion: currentQuestion.value,
-      quizId: route.params.id
-    })
+  currentQuestion.value++
+  question.value = quiz.value.questions[currentQuestion.value]
+  isNextStepAvailable.value = false
+  $socket.emit('nextQuestion', {
+    currentQuestion: currentQuestion.value,
+    quizId: route.params.id
+  })
 }
+
 function isLastQuestion() {
   return currentQuestion.value >= quiz.value.questions.length - 1
 }
 
-function summary(){
+function summary() {
   $socket.emit('quizSummary', {
     quizId: route.params.id
   })
@@ -218,10 +221,12 @@ function summary(){
 function getSelectedAnswer(q) {
   return q.answers.find((a) => a.selected).text
 }
+
 function getSelectedAnswerIsCorrect(q) {
   return q.answers.find((a) => a.selected).isCorrect
 }
-function printResults(){
+
+function printResults() {
   console.log('a')
 }
 

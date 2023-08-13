@@ -41,8 +41,8 @@ jobs:
           APP_URL: ${{ env.APP_URL }}
         run: |
           docker-compose -f docker-compose.yml build \
-          --build-arg BASE_API_URL=${{ env.BASE_API_URL }}
-          --build-arg API_KEY=${{ env.API_KEY }}
+          --build-arg BASE_API_URL=${{ env.BASE_API_URL }} \
+          --build-arg API_KEY=${{ env.API_KEY }} \
           --build-arg APP_URL=${{ env.APP_URL }}
 
       - name: Run App
