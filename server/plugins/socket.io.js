@@ -1,7 +1,6 @@
 import {Server} from 'socket.io';
 export default defineNitroPlugin((nitroApp) => {
     nitroApp.hooks.hook('listen', (server) => {
-        console.log('aaaaaa')
     })
     const nuxtConfig = useRuntimeConfig();
     const port = nuxtConfig.public.socketPort || 3001;
@@ -78,9 +77,6 @@ export default defineNitroPlugin((nitroApp) => {
 
     io.on('connect', async (socket) => {
         socket.emit('message', `welcome ${socket.id}`)
-
-        socket.broadcast.emit('message', `${socket.id} joined`)
-
         socket.on('message', function message(data) {
             socket.emit('message', {data})
         })
@@ -143,9 +139,10 @@ export default defineNitroPlugin((nitroApp) => {
 
         socket.on('quizSummary', async function msg(data) {
             const playersDatas = await getPlayers(socket)
+
             socket.emit('quizSummaryResults', {
                 players: playersDatas,
-                quizId: socket.quizId
+                quizId: socket.quizId,
             })
         })
     })

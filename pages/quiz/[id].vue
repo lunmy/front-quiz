@@ -9,7 +9,7 @@
         passwordLabel="Email"
         :passwordRules="[textRule, emailRule]"
         @validated="submitLogin"/>
-    <div v-else>
+    <div v-else-if="quiz !== null">
       <div class="w-full bg-primary-0 p-4 text-center h-16">
         <span class="text-2xl text-white">{{ quiz.name }}</span>
       </div>
@@ -157,7 +157,9 @@ const socketMessage = ref({message: '', wait: false});
 validationColors.value = $tailwindCSS.colors.validation
 
 // Check if user is logged
-
+if (getStorage('name') !== null && getStorage('email') !== null) {
+  await init();
+}
 
 
 async function init() {
@@ -201,9 +203,10 @@ async function init() {
 }
 
 onMounted(async () => {
-  if (getStorage('name') !== null && getStorage('email') !== null) {
-    await init();
-  }
+
+
+
+
 
   $socket.on('answered', (data) => {
     quiz.value = data.quiz

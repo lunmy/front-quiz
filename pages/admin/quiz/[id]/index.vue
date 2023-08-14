@@ -21,7 +21,7 @@
       <div class="text-center text-4xl font-bold my-16 mx-4">
         {{ question.text }}
       </div>
-      <div class="px-20 grid grid-cols-4 gap-12">
+      <div class="lg:px-20 grid grid-cols lg:grid-cols-4 gap-12">
         <div v-for="(player, index) in players" :key="index"
              class="max-w-sm rounded overflow-hidden shadow-lg p-6 text-center bg-primary-900 rounded-xl"
              :class="{
@@ -55,7 +55,7 @@
     <div v-else class="mb-12">
       <div ref="pdfSection">
         <h2 class="text-center text-2xl mb-8">Résultats</h2>
-        <div class="flex w-1/4 border border-primary-0 rounded-xl mx-auto overflow-hidden ">
+        <div class="flex w-full lg:w-1/4 border border-primary-0 rounded-xl mx-auto overflow-hidden ">
         <span class="text-primary-0 p-2 text-center w-1/2 cursor-pointer"
               :class="{'bg-primary-0 text-white ' : table=== 'answers'}"
               @click="table = 'answers'"
@@ -67,7 +67,7 @@
           > Par joueur</span>
         </div>
 
-        <div v-if="table==='answers'" v-for="(question, index) in quiz.questions" :key="index" class="p-8">
+        <div v-if="table==='answers'" v-for="(question, index) in quiz.questions" :key="index" class="py-8 lg:px-8">
           <div class="border">
             <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ question.text }}</div>
             <table class="w-full">
@@ -83,7 +83,7 @@
             </table>
           </div>
         </div>
-        <div v-if="table==='player'" v-for="(player, index) in playersResults" :key="index" class="p-8">
+        <div v-if="table==='player'" v-for="(player, index) in playersResults" :key="index" class="py-8 lg:px-8">
           <div class="border">
             <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ player.name }}</div>
             <table class="w-full">
@@ -132,14 +132,22 @@ definePageMeta({
   layout: 'admin'
 })
 
-onMounted(async () => {
-  try {
-    quiz.value = await $quizApi.getQuiz(route.params.id)
-  } catch (e) {
-    errorMessage.value = e.message
-    console.log(e.message)
-  }
+try {
+  quiz.value = await $quizApi.getQuiz(route.params.id)
+} catch (e) {
+  console.log(e)
+  errorMessage.value = e.message
+}
 
+if (getStorage('quiz-' + route.params.id) !== null) {
+  const quizStorage = getStorage('quiz-' + quiz.value['@id'].split('/').pop())
+  if (quizStorage !== null) {
+    quiz.value = quizStorage
+  }
+}
+question.value = quiz.value.questions[currentQuestion.value]
+
+onMounted(async () => {
   $socket.emit('adminConnectedTo', {
     quizId: route.params.id,
     currentQuestion: currentQuestion.value
@@ -152,34 +160,18 @@ onMounted(async () => {
     isNextStepAvailable.value = true
   })
   $socket.on('quizSummaryResults', (data) => {
-    console.log(data)
     playersResults.value = data.players
     showResults.value = true
   })
 
   $socket.on('currentQuestion', (data) => {
+    console.log(data)
     currentQuestion.value = data.currentQuestion
     question.value = quiz.value.questions[currentQuestion.value]
   })
-  if (getStorage('quiz-' + route.params.id) !== null) {
-    const quizStorage = getStorage('quiz-' + quiz.value['@id'].split('/').pop())
-    if (quizStorage !== null) {
-      quiz.value = quizStorage
-    }
-  }
-  question.value = quiz.value.questions[currentQuestion.value]
+
 })
 
-function submitLogin(data) {
-  errorMessage.value = '';
-  if (data.login !== quiz.value.adminLogin || data.email !== quiz.value.adminPassword) {
-    console.log('error')
-    errorMessage.value = 'Login ou mot de passe incorrect';
-  } else {
-    setStorage('admin-quiz-' + route.params.id, true)
-    logged.value = true;
-  }
-}
 
 function selectedAnswer(q) {
   // Get selected Answer

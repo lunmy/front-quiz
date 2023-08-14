@@ -5,5 +5,4 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (!token || token === '' || token === null || token === undefined) {
         return router.push('/admin/login')
     }
-    console.log('aaa')
 })
