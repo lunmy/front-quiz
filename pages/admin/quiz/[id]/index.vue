@@ -165,7 +165,6 @@ onMounted(async () => {
   })
 
   $socket.on('currentQuestion', (data) => {
-    console.log(data)
     currentQuestion.value = data.currentQuestion
     question.value = quiz.value.questions[currentQuestion.value]
   })

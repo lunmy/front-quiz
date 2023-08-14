@@ -203,11 +203,6 @@ async function init() {
 }
 
 onMounted(async () => {
-
-
-
-
-
   $socket.on('answered', (data) => {
     quiz.value = data.quiz
     setStorage('quiz-' + route.params.id, quiz.value)
@@ -224,9 +219,6 @@ onMounted(async () => {
   })
   $socket.on('nextQuestion', (data) => {
     nextQuestion(data)
-  })
-  $socket.on('currentQuestion', (data) => {
-    currentQuestion.value = data.currentQuestion
   })
 })
 
@@ -286,7 +278,7 @@ function validateAnswer() {
 }
 
 function nextQuestion(data) {
-  if (isNexStepAvailable.value) {
+  if (isNexStepAvailable.value && data.currentQuestion > currentQuestion.value) {
     currentQuestion.value = data.currentQuestion;
     isNexStepAvailable.value = false
   }

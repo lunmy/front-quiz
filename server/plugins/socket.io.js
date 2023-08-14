@@ -94,7 +94,8 @@ export default defineNitroPlugin((nitroApp) => {
             socket.email = data.email
             socket.join(data.quizId)
             await getPlayers(socket)
-            socket.emit('currentQuestion', {currentQuestion: await currentQuestion(socket)})
+
+            io.to(socket.quizId).emit('currentQuestion', {currentQuestion: await currentQuestion(socket)})
         })
         socket.on('answer', async function msg(data) {
             socket.quiz = data.quiz
