@@ -69,7 +69,10 @@
 
         <div v-if="table==='answers'" v-for="(question, index) in quiz.questions" :key="index" class="py-8 lg:px-8">
           <div class="border">
-            <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ question.text }}</div>
+            <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{
+                question.text
+              }}
+            </div>
             <table class="w-full">
               <tbody>
               <tr v-for="player in playersResults" :key="`resultat${index}`" class="border-b">
@@ -85,7 +88,10 @@
         </div>
         <div v-if="table==='player'" v-for="(player, index) in playersResults" :key="index" class="py-8 lg:px-8">
           <div class="border">
-            <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{ player.name }}</div>
+            <div class="rounded-xl text-xl font-bold text-center bg-primary-0 text-white p-4 mb-4">{{
+                player.name
+              }}
+            </div>
             <table class="w-full">
               <tbody>
               <tr v-for="(question, qindex) in quiz.questions" :key="`question-${qindex}`" class="border-b">
@@ -103,6 +109,7 @@
       <div class="fixed bottom-0 right-0 px-8 py-4">
         <button
             class="bg-primary-0 text-white rounded-xl px-4 py-3 flex justify-center items-center"
+            @click="print(table)"
         >
           Imprimer les résultats
         </button>
@@ -112,6 +119,8 @@
 </template>
 <script setup>
 import {ref} from "vue";
+import {exportToPDF} from '#imports'
+
 const {$quizApi, $socket} = useNuxtApp()
 const route = useRoute()
 const name = ref('admin');
@@ -217,8 +226,20 @@ function getSelectedAnswerIsCorrect(q) {
   return q.answers.find((a) => a.selected).isCorrect
 }
 
-function printResults() {
-  console.log('a')
+function print(table) {
+  exportToPDF(`${quiz.value.name}-${table}.pdf`, pdfSection.value, {
+        unit: 'mm',
+        format: 'A4',
+        orientation: 'portrait',
+      },
+      {
+        margin: [15, 15],
+        image: {type: 'png', quality: 1},
+        html2canvas: {
+          scale: 0.15,
+          letterRendering: true,
+        },
+      })
 }
 
 </script>

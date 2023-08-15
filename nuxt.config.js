@@ -10,9 +10,7 @@ export default defineNuxtConfig({
     },
 
     devtools: {enabled: true},
-    plugins: [
-        //'@sidebase/nuxt-pdf',
-    ],
+    plugins: [],
     css: [
         '@mdi/font/css/materialdesignicons.min.css',
         '@/assets/css/main.scss',
@@ -40,6 +38,7 @@ export default defineNuxtConfig({
     modules: [
         '@invictus.codes/nuxt-vuetify',
         'nuxt-socket-io',
+        '@sidebase/nuxt-pdf',
     ],
     vuetify: {
         /* vuetify options */
