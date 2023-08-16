@@ -192,7 +192,9 @@ async function init() {
     }
     setStorage('quiz-' + route.params.id, quiz.value)
   }
-
+  useHead({
+    title: 'Quiz ' + quiz.value.name,
+  })
   $socket.emit('connectedToQuiz', {
     name: getStorage('name'),
     email: getStorage('email'),

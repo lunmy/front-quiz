@@ -143,6 +143,10 @@ definePageMeta({
 
 try {
   quiz.value = await $quizApi.getQuiz(route.params.id)
+  useHead({
+    title: 'Quiz ' + quiz.value.name,
+  })
+
 } catch (e) {
   console.log(e)
   errorMessage.value = e.message

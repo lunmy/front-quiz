@@ -15,8 +15,12 @@ export default defineNuxtConfig({
         '@mdi/font/css/materialdesignicons.min.css',
         '@/assets/css/main.scss',
     ],
-    head: {
-      title: 'Quiz App',
+    app: {
+        head: {
+            charset: 'utf-8',
+            viewport: 'width=device-width, initial-scale=1',
+            title: 'Quiz App',
+        }
     },
     postcss: {
         plugins: {

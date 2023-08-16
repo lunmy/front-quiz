@@ -58,7 +58,25 @@ export default {
           500: rgbaToHex(0,71,122,.5),
           900: rgbaToHex(0,71,122,.1),
         },
+        'cards': {
+          0: '#ECFCFA',
+          100: '#f4ecfc',
+          200: '#fcecf4',
+          300: '#dbe6eb',
+        },
       },
+      borderColor: (theme) => ({
+        ...theme('colors'),
+      }),
+      borderWidth: {
+        1: '1px',
+      },
+      borderRadius:{
+        '6.5xl': '3.25rem',
+      },
+      zIndex: {
+        '1': '1',
+      }
     },
   },
   plugins: [],
